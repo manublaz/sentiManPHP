@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif; /* Establece la fuente del texto */
+    font-size: 13px; /* Establece el tamaño del texto */
+    line-height: 1.6; /* Establece la altura de línea del texto */
+    color: #333; /* Establece el color del texto */
+    margin: 0; /* Elimina el margen exterior del cuerpo */
+    padding: 20px; /* Añade un espacio interior alrededor del cuerpo */
+    background-color: #f8f8f8; /* Establece el color de fondo del cuerpo */
+}
+
+.pagination {
+    margin-top: 20px; margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.pagination a {
+    color: #333;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.plink {
+	width: 30px; margin: 0 5px;
+    text-align: center; text-decoration: none;
+    color: blue; white-space: nowrap; 
+}
+.plink:hover {
+    text-decoration: none;
+}
+
+        
+        /* Estilo para los campos del formulario */
+        form div {
+            margin-bottom: 10px;
+        }
+        
+        
+        
+.palabra,
+.positiva,
+.negativa,
+.neutral {
+    width: 120px; /* Ancho de los campos de texto */
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.palabra { width: 250px; }
+.positiva { width: 70px; text-align: center; background-color: #d9edf7; }
+.negativa { width: 70px; text-align: center; background-color: #f2dede; }
+.neutral { width: 70px; text-align: center; background-color: #fcf8e3; }
+
+
+        
+.butsave, .butdele {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.butsave:hover, .butdele:hover {
+    background-color: #45a049;
+}
+
+/* Estilo específico para el botón "Eliminar" */
+.butdele {
+    background-color: #f44336; /* Cambiar el color a rojo */
+}
+
+.butdele:hover {
+    background-color: #d32f2f; /* Cambiar el color a rojo oscuro al pasar el mouse */
+}
+        
