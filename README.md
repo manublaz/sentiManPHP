@@ -1,7 +1,15 @@
-# SentiManPHP v2 🧠
+# SentiManPHP Medium
 
-Analizador de sentimiento en español con histórico, API REST y contenido didáctico.
-Pensado para XAMPP local y para que alumnos que hacen scrapers puedan integrarlo fácilmente.
+<div align="center">
+
+[![PHP](https://img.shields.io/badge/PHP-7.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![XAMPP](https://img.shields.io/badge/XAMPP-Compatible-FB7A24?style=for-the-badge&logo=apache&logoColor=white)](https://apachefriends.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+**Analizador de sentimiento en español con histórico, API REST y contenido didáctico.
+Pensado para XAMPP local y para que alumnos que hacen scrapers puedan integrarlo fácilmente.**
+
+</div>
 
 ---
 
