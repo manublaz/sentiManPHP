@@ -141,3 +141,11 @@ El diccionario (`dictionary.sql`) contiene **6.527 entradas** en español:
 ## 📄 Licencia
 
 Proyecto educativo de libre uso y modificación.
+
+---
+
+## 📚 Citas y referencias
+
+Si utilizas **SentiManPHP Medium** en tu investigación o docencia, por favor cítalo de la siguiente forma:
+
+> Blázquez Ochando, M. (2026). *SentiManPHP Medium: Sistema de análisis de sentimiento [Software]. GitHub. [https://github.com/manublaz/sentiManPHP](https://github.com/manublaz/sentiManPHP/tree/medium)
