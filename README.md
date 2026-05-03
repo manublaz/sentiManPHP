@@ -1,152 +1,129 @@
-# README: Analizador de Sentimiento Multicapa (SentiManPHP)
+# SentiManPHP Full
 
-[ PHP 7.4+ ] [ MySQL 5.7+ ] [ Licencia: MIT ] [ Idioma: Español ]
+<div align="center">
 
-Analizador de sentimiento multicapa en español con 5 capas de análisis, diccionario unificado y visualizaciones interactivas. Proyecto educativo en PHP + MySQL, diseñado para que alumnos de scraping puedan integrarlo fácilmente.
+[![PHP](https://img.shields.io/badge/PHP-7.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![XAMPP](https://img.shields.io/badge/XAMPP-Compatible-FB7A24?style=for-the-badge&logo=apache&logoColor=white)](https://apachefriends.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Español](https://img.shields.io/badge/Idioma-Español-red?style=for-the-badge)](.)
 
----
+**Analizador de sentimiento multicapa en español con 5 capas de análisis, stemming,
+panel de ajustes, API REST e instalador visual.
+Pensado para XAMPP local y para que alumnos que hacen scrapers puedan integrarlo fácilmente.**
 
-## ✨ CARACTERÍSTICAS
-- 🎚️ 5 capas de análisis simultáneas: general, emociones básicas, emociones complejas, intención y comercial.
-- 📚 Diccionario unificado con más de 7.000 palabras y expresiones en español, cada una con pesos en hasta 49 categorías.
-- 🔌 API ultrasimple — devuelve texto plano (`clave:valor`), perfecta para principiantes.
-- 🧰 Instalador visual paso a paso, sin necesidad de tocar phpMyAdmin.
-- 📁 Editor de diccionario con carga de archivos SQL (INSERT/REPLACE/UPDATE) desde la propia interfaz.
-- 📊 Visualizaciones interactivas con Chart.js (radar, polar, donut, barras).
-- 🇪🇸 Análisis específico de español con detección de negaciones, intensificadores, n-gramas (2, 3 y 4 palabras), modismos y sarcasmo.
-- 🗄️ Histórico de todos los análisis con estadísticas globales.
+</div>
 
 ---
 
-## 📑 TABLA DE CONTENIDOS
-- Instalación
-- Las 5 capas de análisis
-- Estructura del proyecto
-- Uso de la API
-- Esquema de base de datos
-- Editar el diccionario
-- Tecnologías
-- Proyecto educativo
-- Citas y referencias
-- Licencia
+## 🎚️ Las 5 capas de análisis
+
+Un análisis de sentimiento clásico dice "positivo" o "negativo". SentiManPHP Full va mucho más allá:
+
+| # | Capa | Qué detecta | Categorías |
+|---|------|-------------|------------|
+| 1 | ⚖️ **General** | Polaridad clásica | `positiva`, `negativa`, `neutral` |
+| 2 | 🎭 **Emociones básicas** | Las 8 de Plutchik | `alegria`, `tristeza`, `ira`, `miedo`, `sorpresa`, `asco`, `confianza`, `anticipacion` |
+| 3 | 🧠 **Emociones complejas** | Emociones sociales | `gratitud`, `orgullo`, `admiracion`, `compasion`, `esperanza`, `aceptacion`, `verguenza`, `culpa`, `envidia`, `placer_ajeno`, `apatia`, `ambivalencia`, `soledad`, `humildad` |
+| 4 | 🎯 **Intención** | Para qué se escribió | `queja`, `elogio`, `amenaza`, `peticion`, `sarcasmo`, `urgencia`, `intensidad_alta`, `intensidad_baja` |
+| 5 | 🛍️ **Comercial** | Señales de marketing | `intencion_compra`, `riesgo_abandono`, `fidelizacion`, `satisfaccion_alta`, `insatisfaccion`, `objecion_precio`, `objecion_valor`, `objecion_tiempo`, `objecion_necesidad`, `objecion_confianza`, `comparacion`, `escasez`, `calidad_alta`, `calidad_baja`, `servicio_bueno`, `servicio_malo` |
+
+> 💡 Un mismo texto puede ser *positivo* en sentimiento general pero indicar *queja* en intención y *riesgo de abandono* en la capa comercial. Esa es la utilidad de las capas.
 
 ---
 
-## 🚀 INSTALACIÓN
+## 📁 Estructura de archivos
 
-### Requisitos
-- XAMPP (o LAMP / WAMP / MAMP equivalente) con:
-  - PHP 7.4 o superior
-  - MySQL/MariaDB 5.7 o superior
-  - Apache
-- Navegador moderno
-
-### Pasos
-1. Descarga o clona este repositorio en `htdocs`:
-   Windows: cd C:\xampp\htdocs
-   macOS:   cd /Applications/XAMPP/htdocs
-   Comando: git clone https://github.com/tu-usuario/sentimanphp.git sentiman
-
-2. Arranca Apache y MySQL desde el panel de XAMPP.
-
-3. Visita el instalador en tu navegador:
-   http://localhost/sentiman/install.php
-
-4. Completa los 6 pasos del instalador:
-   1. Verificación del entorno
-   2. Conexión a MySQL (host, puerto, usuario, contraseña, BD)
-   3. Creación de tablas
-   4. Importación del diccionario (~7.000 palabras)
-   5. Generación de config.php
-   6. Resumen final
-
-5. Accede a la aplicación:
-   http://localhost/sentiman/
-
-💡 Si tu MySQL escucha en otro puerto (p. ej. 3307), el instalador permite especificarlo en el paso 2.
-
----
-
-## 🎚️ LAS 5 CAPAS DE ANÁLISIS
-
-| Capa | Descripción | Categorías |
-|------|-------------|------------|
-| ⚖️ General | Polaridad clásica | positiva, negativa, neutral |
-| 🎭 Emociones básicas | 8 primarias (Plutchik) | alegria, tristeza, ira, miedo, sorpresa, asco, confianza, anticipacion |
-| 🧠 Emociones complejas | Sociales | gratitud, orgullo, admiracion, compasion, esperanza, aceptacion, verguenza, culpa, envidia, placer_ajeno, apatia, ambivalencia, soledad, humildad |
-| 🎯 Intención | Propósito del texto | queja, elogio, amenaza, peticion, sarcasmo, urgencia, intensidad_alta, intensidad_baja |
-| 🛍️ Comercial | Marketing y ventas | intencion_compra, riesgo_abandono, fidelizacion, satisfaccion_alta, insatisfaccion, objecion_precio, objecion_valor, objecion_tiempo, objecion_necesidad, objecion_confianza, comparacion, escasez, calidad_alta, calidad_baja, servicio_bueno, servicio_malo |
-
-### ¿Por qué multicapa?
-Un texto puede ser positivo en sentimiento general y al mismo tiempo expresar queja en intención y riesgo de abandono en la capa comercial.
-
-Ejemplo:
-"Llevo años con vosotros pero el último mes el servicio ha sido lamentable. Voy a cancelar mi suscripción."
-
-- Capa General: Mixto (palabras como años, cancelar, lamentable)
-- Emociones básicas: ira alta, tristeza media
-- Emociones complejas: humildad baja, apatia
-- Intención: queja, amenaza, urgencia
-- Comercial: riesgo_abandono muy alto, fidelizacion alta (paradoja típica), servicio_malo
-
----
-
-## 📁 ESTRUCTURA DEL PROYECTO
-sentiman/
-├── install.php                    # Instalador visual (6 pasos)
-├── install.sql                    # Esquema unificado de BD
-├── dictionary.sql                 # ~7.000 palabras con todos los pesos
-├── config.php                     # Generado por el instalador
-├── index.php                      # Interfaz web principal
-├── sentiman.php                   # Motor de análisis multicapa
-├── api.php                        # Endpoint público (texto plano)
-├── upload_sql.php                 # Cargador de actualizaciones SQL
-├── chart.min.js                   # Chart.js para visualizaciones
+```
+sentiManPHP-v2/
+├── install.php             ← Instalador visual (6 pasos)
+├── install.sql             ← Esquema unificado de BD (49 columnas)
+├── dictionary.sql          ← 7.000+ palabras con pesos multicapa
+├── config.php              ← Configuración de BD (generado por el instalador)
+├── config_ajustes.json     ← Factores de ajuste (generado por el panel)
+├── index.php               ← Interfaz web con 6 pestañas
+├── sentiman.php            ← Motor de análisis con stemming
+├── api.php                 ← API REST (texto plano clave:valor)
+├── upload_sql.php          ← Cargador de actualizaciones SQL
+├── chart.min.js            ← Chart.js para visualizaciones
 ├── chartjs-plugin-datalabels.min.js
-├── interface/
-│   └── logo.jpeg
-└── README.md
+└── interface/
+    └── logo.jpeg
+```
 
 ---
 
-## 🔌 USO DE LA API
-Devuelve texto plano con formato clave:valor (un par por línea). Sin JSON, sin headers complicados.
+## 🚀 Instalación en XAMPP
 
-Endpoint: http://localhost/sentiman/api.php?texto=TU_TEXTO
+### 1. Copiar archivos
 
-Parámetros:
-- texto (Obligatorio): String (máx 10.000 chars)
-- capa (Opcional): general (defecto), emociones_basicas, emociones_complejas, intencion, comercial, todas.
+Copia toda la carpeta dentro de:
+```
+C:\xampp\htdocs\sentiman\       (Windows)
+/Applications/XAMPP/htdocs/sentiman/  (macOS)
+```
 
-### Ejemplos:
-1. Capa general: GET /sentiman/api.php?texto=Esta+película+es+maravillosa
-   Respuesta:
-   sentimiento:positivo
-   positivo:78.50
-   negativo:12.30
-   neutral:9.20
-   polaridad:0.73
-   subjetividad:0.85
-   intensidad:7.40
-   etiqueta:Positivo
-   palabras:4
-   encontradas:3
-   cobertura:75.00
+### 2. Ejecutar el instalador visual
 
-2. Capa comercial: GET /sentiman/api.php?texto=Quiero+cancelar+mi+suscripción&capa=comercial
-   Respuesta:
-   capa:comercial
-   categorias:1
-   riesgo_abandono:9.0
-   dominante:riesgo_abandono
+Abre en tu navegador:
+```
+http://localhost/sentiman/install.php
+```
 
-### Clientes de código:
+El instalador te guía en **6 pasos**:
+1. ✅ Verificación del entorno PHP
+2. 🔌 Conexión a MySQL (host, puerto, usuario, contraseña, BD)
+3. 🗄️ Creación de tablas (esquema unificado con 49 columnas)
+4. 📚 Importación del diccionario (~7.000 palabras)
+5. ⚙️ Generación de `config.php`
+6. 🎉 Resumen final
 
-#### Cliente PHP:
+> 💡 Si tu MySQL escucha en el puerto 3307 (conflicto típico en XAMPP), el instalador te permite especificarlo en el paso 2.
+
+### 3. ¡Listo!
+
+Abre: http://localhost/sentiman/
+
+---
+
+## 🔌 API — Uso para scrapers
+
+### Petición GET (la más simple)
+```
+http://localhost/sentiman/api.php?texto=Tu+texto+aquí
+```
+
+### Seleccionar capa
+```
+http://localhost/sentiman/api.php?texto=...&capa=emociones_basicas
+http://localhost/sentiman/api.php?texto=...&capa=comercial
+http://localhost/sentiman/api.php?texto=...&capa=todas
+```
+
+Capas válidas: `general` (defecto), `emociones_basicas`, `emociones_complejas`, `intencion`, `comercial`, `todas`.
+
+### Respuesta (texto plano)
+```
+sentimiento:positivo
+positivo:72.50
+negativo:15.30
+neutral:12.20
+polaridad:0.65
+subjetividad:0.68
+intensidad:7.40
+etiqueta:Positivo
+palabras:42
+encontradas:18
+cobertura:42.86
+```
+
+### Código PHP para el scraper del alumno
+```php
 <?php
 $texto = "Estoy muy decepcionado, voy a cancelar el servicio";
 $url   = "http://localhost/sentiman/api.php?capa=comercial&texto=" . urlencode($texto);
 $resp  = file_get_contents($url);
+
+// Parsear respuesta clave:valor
 $datos = [];
 foreach (explode("\n", trim($resp)) as $linea) {
     if (str_contains($linea, ':')) {
@@ -154,85 +131,137 @@ foreach (explode("\n", trim($resp)) as $linea) {
         $datos[trim($k)] = trim($v);
     }
 }
-print_r($datos);
-?>
 
-#### Cliente Python:
+print_r($datos);
+```
+
+### Código Python para el scraper del alumno
+```python
 import requests
 from urllib.parse import urlencode
+
 texto = "Estoy harta del servicio, voy a darme de baja"
-url = "http://localhost/sentiman/api.php?" + urlencode({"texto": texto, "capa": "comercial"})
+url = "http://localhost/sentiman/api.php?" + urlencode({
+    "texto": texto,
+    "capa": "comercial"
+})
+
 resp = requests.get(url).text
-datos = dict(linea.split(":", 1) for linea in resp.strip().split("\n") if ":" in linea)
+datos = dict(l.split(":", 1) for l in resp.strip().split("\n") if ":" in l)
 print(datos)
-
-#### Cliente Curl:
-curl "http://localhost/sentiman/api.php?texto=Me%20encanta&capa=emociones_basicas"
+```
 
 ---
 
-## 🗄️ ESQUEMA DE BASE DE DATOS
+## ✨ Novedades Full respecto a Medium
 
-### Tabla `dictionary`
-CREATE TABLE dictionary (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    palabra     VARCHAR(255) UNIQUE NOT NULL,
-    -- Capa general
-    positiva    FLOAT DEFAULT 0,
-    negativa    FLOAT DEFAULT 0,
-    neutral     FLOAT DEFAULT 0,
-    -- Capa emociones básicas
-    alegria     FLOAT DEFAULT 0,
-    tristeza    FLOAT DEFAULT 0,
-    ira         FLOAT DEFAULT 0,
-    miedo       FLOAT DEFAULT 0,
-    -- ... 45 columnas más, una por categoría
-);
-
-- Tabla `analisis_historico`: Guarda cada análisis ejecutado con todos los puntajes.
-- Vista `v_estadisticas`: Agregaciones globales listas para el dashboard.
+| Característica | Medium | Full |
+|---|---|---|
+| Capas de análisis | 1 (general) | **5** (general + emociones + intención + comercial) |
+| Diccionario | 6.527 palabras (3 pesos) | **7.047 palabras (49 pesos por palabra)** |
+| Stemming | ❌ | ✅ Snowball simplificado para español |
+| Panel de ajustes | ❌ | ✅ Sliders en tiempo real |
+| Corrección de sesgo | ❌ | ✅ Factores configurables |
+| Editor de diccionario | ❌ | ✅ Subir SQL con INSERT/REPLACE/UPDATE |
+| Instalador visual | ❌ | ✅ 6 pasos con detección de errores |
+| Capas en API | ❌ | ✅ Parámetro `?capa=` |
+| Negaciones e intensificadores | ✅ | ✅ |
+| Bigramas / trigramas / tetragramas | Bigramas | **Hasta 4-gramas** |
+| Gráficas interactivas | 8 | **8 + radar/polar por capa** |
+| Histórico | ✅ | ✅ (con datos de todas las capas) |
 
 ---
 
-## 📚 EDITAR EL DICCIONARIO
-Hay tres formas:
+## ⚙️ Panel de ajustes
 
-1) Interfaz web: Pestaña Diccionario -> Subir actualización SQL (.sql). Soporta INSERT, REPLACE, UPDATE.
-2) Plantilla nueva: 
-   REPLACE INTO `dictionary` (palabra, positiva, negativa, alegria, gratitud) VALUES('te quiero', 9, 0, 8, 0);
-3) Plantilla modificación:
-   UPDATE `dictionary` SET ira = 9, negativa = 9 WHERE palabra = 'odio';
+La pestaña **Ajustes** permite modificar el comportamiento del motor en tiempo real:
 
-### Columnas válidas (Pesos de 0 a 10):
-positiva, negativa, neutral,
-alegria, tristeza, ira, miedo, sorpresa, asco, confianza, anticipacion,
-gratitud, orgullo, admiracion, compasion, esperanza, aceptacion, verguenza, culpa, envidia, placer_ajeno, apatia, ambivalencia, soledad, humildad,
-queja, elogio, amenaza, peticion, sarcasmo, urgencia, intensidad_alta, intensidad_baja,
-intencion_compra, riesgo_abandono, fidelizacion, satisfaccion_alta, insatisfaccion, objecion_precio, objecion_valor, objecion_tiempo, objecion_necesidad, objecion_confianza, comparacion, escasez, calidad_alta, calidad_baja, servicio_bueno, servicio_malo.
+| Ajuste | Qué hace | Rango |
+|--------|----------|-------|
+| Factor positivo / negativo / neutral | Multiplicadores para el puntaje general | 0 – 3.0 |
+| Corrección de sesgo | Suma puntos al negativo para equilibrar diccionarios optimistas | 0 – 20 |
+| Suavizado | < 1 aplana diferencias, > 1 las amplifica | 0.3 – 2.0 |
+| Factor stemming | Peso heredado cuando se usa la raíz | 0 – 1.0 |
+| Stemming on/off | Activa/desactiva la búsqueda por raíz | checkbox |
+| Longitud mínima raíz | Cuántas letras mínimo para aceptar un stem | 3 – 6 |
 
----
-
-## 🛠️ TECNOLOGÍAS
-- Backend: PHP 7.4+ (mysqli)
-- Base de datos: MySQL / MariaDB
-- Frontend: HTML + CSS + JS vanilla
-- Visualizaciones: Chart.js + chartjs-plugin-datalabels
+Los ajustes se guardan en `config_ajustes.json` y se aplican inmediatamente.
 
 ---
 
-## 🎓 PROYECTO EDUCATIVO
-SentiManPHP permite a los alumnos:
-- Construir scrapers.
-- Enviar texto a la API.
-- Recibir análisis estructurados.
-- Mejorar el diccionario vía SQL.
+## 🌿 Stemming
+
+Cuando una palabra no se encuentra en el diccionario, el motor:
+1. Calcula su raíz: `abandonar` → `abandon`
+2. Busca palabras del diccionario con esa raíz: `abandono`
+3. Hereda sus pesos multiplicados por el factor de stemming (0.7 por defecto)
+
+En la tabla de detalle aparecen marcadas como: `abandonar — stem → abandono — ×0.70`
 
 ---
 
-## 📚 CITAS Y REFERENCIAS
-Blázquez Ochando, M. (2026). SentiManPHP Full: Sistema de análisis de sentimiento multicapa en español [Software]. GitHub. https://github.com/manublaz/sentiManPHP
+## 📚 Editar el diccionario
+
+Tres formas de añadir o modificar palabras:
+
+### Desde la interfaz web
+Pestaña **Diccionario → Subir actualización SQL**. Acepta `.sql` con `INSERT`, `REPLACE`, `UPDATE` sobre `dictionary`.
+
+### Añadir palabras nuevas
+```sql
+REPLACE INTO `dictionary` (palabra, positiva, negativa, alegria, gratitud) VALUES
+('te quiero',          9, 0, 8, 0),
+('muchísimas gracias', 8, 0, 0, 9);
+```
+
+### Modificar palabras existentes
+```sql
+UPDATE `dictionary` SET ira = 9, negativa = 9 WHERE palabra = 'odio';
+UPDATE `dictionary` SET alegria = 9, positiva = 8 WHERE id = 1234;
+```
+
+Los pesos van de **0 a 10**. Las 49 columnas se listan en la pestaña Diccionario de la interfaz.
 
 ---
 
-## 📜 LICENCIA
-MIT — libre de usar, modificar y redistribuir.
+## 🤖 Generador automático de pesos (sentiBUILD.py)
+
+El script `sentiBUILD.py` usa un LLM local (LM Studio) para asignar automáticamente
+los pesos de las 46 categorías a cada palabra del diccionario:
+
+```bash
+python sentiBUILD.py dictionary.sql --port 1235 --batch 10 --skip-curadas
+```
+
+Genera un archivo `updates.sql` listo para subir desde la pestaña Diccionario.
+
+---
+
+## 📊 Métricas calculadas
+
+| Métrica | Descripción | Rango |
+|---|---|---|
+| Positivo % | % del peso léxico positivo | 0–100 |
+| Negativo % | % del peso léxico negativo | 0–100 |
+| Neutral % | % del peso léxico neutral | 0–100 |
+| Polaridad | Dirección del sentimiento | −1 a +1 |
+| Subjetividad | Cuánto sentimiento hay | 0 a 1 |
+| Intensidad | Fuerza media de las palabras | 0 a 10 |
+| Cobertura | % palabras halladas en diccionario | 0–100 |
+| Activación | Energía emocional (alta vs baja) | 0 a 1 |
+| Etapa funnel | Posición en embudo comercial | atracción / consideración / conversión / retención / fuga |
+| Sarcasmo | Detección de sarcasmo | sí / no |
+
+---
+
+## 📄 Licencia
+
+Proyecto educativo de libre uso y modificación.
+
+---
+
+## 📚 Citas y referencias
+
+Si utilizas **SentiManPHP Full** en tu investigación o docencia, por favor cítalo de la siguiente forma:
+
+> Blázquez Ochando, M. (2026). *SentiManPHP Full: Sistema de análisis de sentimiento multicapa* [Software]. GitHub. [https://github.com/manublaz/sentiManPHP](https://github.com/manublaz/sentiManPHP/tree/full)
